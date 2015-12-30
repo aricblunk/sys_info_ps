@@ -78,16 +78,17 @@ $fs_outfile + " generated " + $(get-date) | Out-File $fs_outfile #overwrites old
 
 Sys-Info-Output-Title "OS"
 $output_new = $wmi_Win32_OperatingSystem | ft @{e={$_.Caption};l='Operating System'},@{e={$_.OSArchitecture};l='Arch'},@{e={$_.CSDVersion};l='SKU'},Version,@{e={$_.MUILanguages};l='Lang'},RegisteredUser -a | Out-String
-Sys-Info-Output-Table $output_new.Trim()
+#Sys-Info-Output-Table $output_new.Trim()
 
-$output_new = $wmi_Win32_UserAccount | measure | Format-Wide count | Out-String
-Sys-Info-Output-Title ("Users: " + $output_new.Trim())
-$output_new = $wmi_Win32_UserAccount | sort Disabled | ft Name,@{e={-not $_.Disabled};l='Enabled'},Lockout,@{e={$_.PasswordRequired};l='PwRequired'},@{e={$_.PasswordExpires};l='PwExpires'},@{e={$_.LocalAccount};l='Local'},Domain -a | Out-String
-Sys-Info-Output-Table $output_new.Trim()
+$sysinfo_users_num = $wmi_Win32_UserAccount | measure | Format-Wide count | Out-String
+#Sys-Info-Output-Title ("Users: " + $output_new.Trim())
+#Sys-Info-Output-Table ($wmi_Win32_UserAccount | sort Disabled | ft @{e={$_.Name};l='Users: ' + $sysinfo_users_num},@{e={-not $_.Disabled};l='Enabled'},Lockout,@{e={$_.PasswordRequired};l='PwRequired'},@{e={$_.PasswordExpires};l='PwExpires'},@{e={$_.LocalAccount};l='Local'},Domain -a | Out-String)
+Sys-Info-Output-Table ($wmi_Win32_UserAccount | sort Disabled | ft Name,@{e={-not $_.Disabled};l='Enabled'},Lockout,@{e={$_.PasswordRequired};l='PwRequired'},@{e={$_.PasswordExpires};l='PwExpires'},@{e={$_.LocalAccount};l='Local'},Domain -a | Out-String)
+#Sys-Info-Output-Table $output_new.Trim()
 
 Sys-Info-Output-Title "Board"
 $output_new = $wmi_Win32_BaseBoard | ft Manufacturer,Product,Version,SerialNumber -a | Out-String
-Sys-Info-Output-Table $output_new.Trim()
+##-Info-Output-Table $output_new.Trim()
 
 Sys-Info-Output-Title "BIOS"
 $output_new = $wmi_Win32_BIOS | ft Manufacturer,@{e={$_.SMBIOSBIOSVersion};l='Version'},@{e={$_.ReleaseDate -replace '000','' -replace '.\+',''};l='Date'},SerialNumber -a | Out-String
@@ -95,7 +96,7 @@ Sys-Info-Output-Table $output_new.Trim()
 
 Sys-Info-Output-Title "CPU"
 $output_new = $wmi_Win32_Processor | ft @{e={$_.SocketDesignation};l='Socket'},@{e={$_.Name -replace '\(R\)','' -replace 'Core\(TM\) ','' -replace 'CPU @ ',''};l='Processor'},@{e={[decimal]::round($_.MaxClockSpeed/1000,2)};l='GHz'},@{e={$_.NumberOfCores};l='Cores'},@{e={$_.NumberOfLogicalProcessors};l='Threads'},@{e={$_.L2CacheSize};l='L2 KB/core'},@{e={$_.L3CacheSize};l='L3 KB total'} -a | Out-String
-Sys-Info-Output-Table $output_new.Trim()
+#Sys-Info-Output-Table $output_new.Trim()
 
 "Done writing output, opening it" | Out-Host
 notepad $fs_outfile

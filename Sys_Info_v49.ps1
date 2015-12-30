@@ -35,7 +35,7 @@ NetworkAdapterConfiguration
 PnPEntity
 
 todo:
-ideas here: https://docs.google.com/document/d/1fLl7pgavQwtiyBKjX8EdCE7GEABY98GpjXdc2Ujpd5U/edit
+see gdocs
 
 create some damn functions
 list audio playback/recording devices with render/capture under
