@@ -35,7 +35,7 @@ $reports = @(
     "16) Printer"
     "17) All PnP Devices"
     "18) All Reports"
-    "19) Exit to shell"
+    "19) Exit"
 )
 $hash = @{}
 $id=1
