@@ -1,7 +1,7 @@
 ﻿#sys_info revision 64
 
 param (
-    [string]$report = "interactive"
+    $report = "interactive"
 )
 
 $drivetypes = @{
