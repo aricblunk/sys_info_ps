@@ -1,4 +1,4 @@
-﻿#sys_info thin client version
+﻿#sys_info revision 64
 
 param (
     [string]$report = "interactive"
